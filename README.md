@@ -19,3 +19,17 @@ creativeu
     * `database: creativeu`
     * `username: root`
     * `password: [your password]`
+    
+### Useful terminal commands
+
+
+#### `git status`
+
+
+git add .
+
+git checkout develop
+
+git pull origin develop
+git push origin develop
+
