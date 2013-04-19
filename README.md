@@ -10,7 +10,7 @@ creativeu
     * `CREATE DATABASE creativeu;`
 
 3. Import creativeu.sql into the creativeu database:
-    * `mysql -uroot -p creativeu < [path to file]/includes/creativeu.sql` (or use PHPMYADMIN)
+    * `mysql -uroot -p creativeu < [path to file]/creativeu.sql` (or use PHPMYADMIN)
 
 4. Copy db-template.php and rename to db-local.php
 
