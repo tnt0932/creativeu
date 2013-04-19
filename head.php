@@ -11,8 +11,8 @@
 	<!--[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<link rel="stylesheet" href="css/html5reset-1.6.1.css">
-	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="stylesheets/css/html5reset-1.6.1.css">
+	<link rel="stylesheet" href="stylesheets/css/screen.css">
 	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="js/jquery.masonry.min.js"></script> <!--TODO: Switch to Masonry.min.js -->
