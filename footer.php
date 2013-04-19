@@ -4,7 +4,7 @@
     <ul class="float_left">
         <li><a href="about.php">About Us</a> | <a href="admin.php">Admin Login</a></li>
         <li>Designed &amp; built with love by Interactive Design students</li>
-        <li>&copy; 2012 CREATIVEU</li>
+        <li>&copy; <?php echo date("Y") ?> CREATIVEU</li>
     </ul>
     
     
