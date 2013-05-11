@@ -69,6 +69,7 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
     if (!isset($_SESSION['logged_in_user'] /* || $_SESSION['admin_logged_in_user'] */)) {
     ?>
     <aside id="marketing">
+            <span class="icon-close" data-btn="close"></span>
             <h2><span class="blue">Creative</span> <span class="pink">U</span> is the new academic network for creative students in Canada</h2><br>
             <h3>Create an account &amp; share your work to the world!<br>
             Let us convince you</h3>
@@ -204,48 +205,64 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
         
      </section>
      
+
+
      
-<script>
-      
-$(function(){
-        
+    <?php require_once 'footer.php'; ?>
+
+    <script src="js/cookies.min.js"></script>
+    <script>
+          
+    $(function(){
+
+        divClose("[data-btn='close']", '#marketing');
+
+        if (Cookies.get('hideForWeek')) {
+            $('#marketing').show(); // TODO: Remove to hide marketing bar
+        } else {
+            $('#marketing').show();
+        }
+            
         var $container = $('#snippet_stream_container');
-        
+
         $container.imagesLoaded(function(){
-          $container.masonry({
-            itemSelector: '.snippet_item',
-            isFitWidth: true
-          });
+            $container.masonry({
+                itemSelector: '.snippet_item',
+                isFitWidth: true
+            });
         });
-        
+
         $container.infinitescroll({
-          navSelector  : '#pagination',    // selector for the paged navigation 
-          nextSelector : '#paginate_next',  // selector for the NEXT link (to page 2)
-          itemSelector : '.snippet_item',     // selector for all items you'll retrieve
-          loading: {
-              finished: undefined,
-              finishedMsg: 'No more pages to load.',
-              img: 'http://i.imgur.com/6RMhx.gif'
+            navSelector  : '#pagination',    // selector for the paged navigation 
+            nextSelector : '#paginate_next',  // selector for the NEXT link (to page 2)
+            itemSelector : '.snippet_item',     // selector for all items you'll retrieve
+            loading: {
+                finished: undefined,
+                finishedMsg: 'No more pages to load.',
+                img: 'http://i.imgur.com/6RMhx.gif'
             }
-          },
-          // trigger Masonry as a callback
-          function( newElements ) {
+        },
+        // trigger Masonry as a callback
+        function( newElements ) {
             // hide new items while they are loading
             var $newElems = $( newElements ).css({ opacity: 0 });
             // ensure that images load before adding to masonry layout
             $newElems.imagesLoaded(function(){
-              // show elems now they're ready
-              $newElems.animate({ opacity: 1 });
-              $container.masonry( 'appended', $newElems, true ); 
+                // show elems now they're ready
+                $newElems.animate({ opacity: 1 });
+                $container.masonry( 'appended', $newElems, true ); 
             });
-          }
-        );
-        
-      });
+        });
+
+    });
+
+    function divClose(trigger, target) {
+        $(trigger).click(function() {
+            $(target).slideUp();
+            Cookies.set('hideForWeek', true, { expires: 604800 });
+        });
+    }
 
     </script>
-
-     
-    <?php require_once 'footer.php'; ?>
 
     <?php require_once 'foot.php'; ?>

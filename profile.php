@@ -157,9 +157,7 @@
 ?>
 
     
-<?php 
-    require_once 'header.php';
-?>
+<?php require_once 'header.php'; ?>
 
 <div id="container">
 <!-- ==================================
@@ -287,7 +285,7 @@
                     }
                  ?>
                 </select>
-                <? } ?>
+                <?php } ?>
                 
                 
                  <h4 id="profile-school"><?php echo $program .' at '.$school . ', '.$gradyear?></h4>
@@ -301,7 +299,7 @@
                 <?php } ?>
                 <?php if (isset($_GET['edit'])) {?>
                 <p id="chars_left_txt">You have <span id="charsLeft"></span> chars left.</p>
-                <? } ?>
+                <?php } ?>
                 <br>
                 
                 <label id="student_public_email_label">
@@ -404,14 +402,6 @@ echo '<div id="pagination" style="visibility:hidden">';
 
                 
 </section>
-             
-             
-             
-             
-
-
-
-
 
 <?php require_once 'footer.php'; ?>
 
@@ -419,9 +409,8 @@ echo '<div id="pagination" style="visibility:hidden">';
             Scripts
 ==================================-->
 
-<script src="js/jquery.limit.js"></script>
+<script src="js/jquery.limit.js" type="text/javascript"></script>
 <script type="text/javascript">
-
 
     $('#del_profile_btn').click(function() {
         $('#del_profile_confirm').show();

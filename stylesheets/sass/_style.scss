@@ -12,10 +12,6 @@ Responsive Grid
 
 */
 
-// =================================
-// VARIABLES ///////////////////////
-// =================================
-
 
 
 /* ================================================================================
@@ -289,14 +285,20 @@ nav ul li a:active {
 =====================*/
 
 #marketing {
+    display: none;
     height: 100%;
     padding-top: 15px;
 	padding-left: 30px;
     @include background-image(linear-gradient(lighten($color-dark-grey, 60%), lighten($color-dark-grey, 40%)));
     @include box-shadow(0 0 3px 0 rgba(0,0,0,1));
     position: relative;
-    z-index: 100;
+    z-index: 1;
 	
+    .icon-close {
+        cursor: pointer;
+        float: right;
+        margin: 10px;
+    }
 }
 
 #marketing h2 {

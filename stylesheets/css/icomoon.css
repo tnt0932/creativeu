@@ -1,0 +1,108 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../../fonts/icomoon.eot');
+	src:url('../../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../../fonts/icomoon.woff') format('woff'),
+		url('../../fonts/icomoon.ttf') format('truetype'),
+		url('../../fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"] {
+*/
+.icon-cancel, .icon-close, .icon-arrow-down, .icon-arrow-down-2, .icon-list, .icon-list-2, .icon-upload, .icon-publish, .icon-link, .icon-facebook, .icon-twitter, .icon-linkedin, .icon-mail, .icon-paperplane, .icon-network, .icon-warning, .icon-warning-2, .icon-checkmark-circle, .icon-googleplus, .icon-github, .icon-google-drive, .icon-dropbox, .icon-pinterest {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-cancel:before {
+	content: "\e000";
+}
+.icon-close:before {
+	content: "\e001";
+}
+.icon-arrow-down:before {
+	content: "\e002";
+}
+.icon-arrow-down-2:before {
+	content: "\e003";
+}
+.icon-list:before {
+	content: "\e00b";
+}
+.icon-list-2:before {
+	content: "\e004";
+}
+.icon-upload:before {
+	content: "\e005";
+}
+.icon-publish:before {
+	content: "\e006";
+}
+.icon-link:before {
+	content: "\e007";
+}
+.icon-facebook:before {
+	content: "\e008";
+}
+.icon-twitter:before {
+	content: "\e009";
+}
+.icon-linkedin:before {
+	content: "\e00a";
+}
+.icon-mail:before {
+	content: "\e00c";
+}
+.icon-paperplane:before {
+	content: "\e00d";
+}
+.icon-network:before {
+	content: "\e00e";
+}
+.icon-warning:before {
+	content: "\e00f";
+}
+.icon-warning-2:before {
+	content: "\e010";
+}
+.icon-checkmark-circle:before {
+	content: "\e011";
+}
+.icon-googleplus:before {
+	content: "\e012";
+}
+.icon-github:before {
+	content: "\e013";
+}
+.icon-google-drive:before {
+	content: "\e014";
+}
+.icon-dropbox:before {
+	content: "\e015";
+}
+.icon-pinterest:before {
+	content: "\e016";
+}
