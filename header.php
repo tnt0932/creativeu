@@ -152,6 +152,7 @@ $(document).ready(function(){
             ==========================================-->
             <li id="register"><a href="#" id="register-trigger">Register</a>
                 <div id="register-content">
+                    <p>Are you Canadian student? Register for a free account to display your work!</p>
                     <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
                         <input type="hidden" name="from_page" value="<?php echo $_SERVER['SCRIPT_NAME']; ?>">
                         <fieldset id="register-inputs">

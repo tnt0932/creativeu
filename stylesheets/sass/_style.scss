@@ -10,13 +10,13 @@ Responsive Grid
 
 =========================
 
-MARGINS / PADDING==================
-
-left/right = 20px
-
-=========================
-
 */
+
+// =================================
+// VARIABLES ///////////////////////
+// =================================
+
+
 
 /* ================================================================================
 
@@ -48,7 +48,7 @@ body {
     width: 100%;
     height: 100%;
     background: $color-base-light;
-    font-family: /* "Helvetica Neue" */"Open Sans", Helvetica, Arial, sans-serif;
+    font-family: $ff-open-sans;
 }
 
 #container {
@@ -142,7 +142,7 @@ h4 {
 	border:1px solid #2ec7ff;
 	display:inline-block;
 	color:#ffffff;
-	font-family:arial;
+	font-family: $ff-helvetica-neue;
 	font-size:15px;
 	font-weight:bold;
 	padding:6px 15px;
@@ -240,6 +240,7 @@ nav ul li a:active {
 #login-content,
 #register-content,
 #nav-links-content {
+    color: white;
     display:none;
     background-color:#383838;
     position:absolute;
@@ -251,6 +252,10 @@ nav ul li a:active {
     margin-top:5px;
     margin-right: 0px;
     *margin-right: -1px;
+
+    .btn-pink {
+        width: 100%;
+    }
 }
 
 #nav-links-content li{
@@ -263,8 +268,9 @@ nav ul li a:active {
 
 #login-inputs input,
 #register-inputs input {
+    margin-top: 10px;
     padding: 6px 3px;
-    width: 260px;
+    width: 265px;
 }
  
  
@@ -286,20 +292,10 @@ nav ul li a:active {
     height: 100%;
     padding-top: 15px;
 	padding-left: 30px;
-    
-    /* gradient background */
-    background-image: linear-gradient(bottom, rgb(122,122,122) 0%, rgb(184,184,184) 42%, rgb(235,235,235) 80%);
-    background-image: -o-linear-gradient(bottom, rgb(122,122,122) 0%, rgb(184,184,184) 42%, rgb(235,235,235) 80%);
-    background-image: -moz-linear-gradient(bottom, rgb(122,122,122) 0%, rgb(184,184,184) 42%, rgb(235,235,235) 80%);
-    background-image: -webkit-linear-gradient(bottom, rgb(122,122,122) 0%, rgb(184,184,184) 42%, rgb(235,235,235) 80%);
-    background-image: -ms-linear-gradient(bottom, rgb(122,122,122) 0%, rgb(184,184,184) 42%, rgb(235,235,235) 80%);
-    background-image: -webkit-gradient(
-	linear,
-	left bottom,
-	left top,
-	color-stop(0, rgb(122,122,122)),
-	color-stop(0.42, rgb(184,184,184)),
-	color-stop(0.8, rgb(235,235,235)) );
+    @include background-image(linear-gradient(lighten($color-dark-grey, 60%), lighten($color-dark-grey, 40%)));
+    @include box-shadow(0 0 3px 0 rgba(0,0,0,1));
+    position: relative;
+    z-index: 100;
 	
 }
 
@@ -310,7 +306,7 @@ nav ul li a:active {
 }
 
 #marketing h3 {
-	font-family: "Open Sans", Helvetica, sans-serif;
+	font-family: $ff-open-sans;
 	font-weight: 200;
 	font-size: 1em;
 	line-height: 1.3;
@@ -400,7 +396,7 @@ aside#welcome_alert {
 }
 
  aside#welcome_alert h2 {
-	font-family: "Open Sans", Helvetica, sans-serif;
+	font-family: $ff-open-sans;
 	font-weight: 200;
 	font-size: 0.8em;
 	line-height: 1.3;
@@ -408,7 +404,7 @@ aside#welcome_alert {
 }
 
 aside#welcome_alert h1.welcome-alert {
-	font-family: "Helvetica Neue", "Open Sans", Helvetica, sans-serif;
+	font-family: $ff-helvetica-neue;
 	font-weight: 100;
 	font-size: 1.5em;
 	padding-bottom: 0;
@@ -426,7 +422,7 @@ aside#welcome_alert h1.welcome-alert {
 
 
 h1#profile-name {
-	font-family: "Open Sans", Helvetica, sans-serif;
+	font-family: $ff-open-sans;
 	font-weight: 100;
 	font-size: 5.0em;
 	/* padding-bottom: 0px !important; */
