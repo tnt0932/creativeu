@@ -517,35 +517,56 @@ div#accountcontent .sbutton{
     color: #000;
 }
 
-
-
-#filter_tabs li {
-    height: 50px;
-}
-
 .filter_content {
     max-width: 100%;
     margin-left: 130px;
     background: transparent;
+
+    >h2 {
+        font-size: 14px;
+    }
 }
 
-.filter_content li {
-    display: inline-block;
-    padding: 10px;
-    background: #f0f0f0;
-    margin: 5px;
-    @include border-radius(20px);
-    font-size: 0.7em;
+.filter_content {
+    .filters {
+        > li {
+            display: inline-block;
+            background: lighten($color-dark-grey, 70%);
+            @include border-radius(20px);
+            font-size: $fs-xsmall;
+            margin-bottom: 5px;
+            margin-right: 5px;
+            padding: 5px 35px 5px 8px;
+            position: relative;
+            &:first-child {
+                background: white;
+                padding: 5px 8px;
+            }
+            &.active,
+            &:hover {
+                background: $color-accent-pink;
+                [data-filter] {
+                    color: white !important;
+                    > span {
+                        color: black;
+                    }
+                }
+            }
+            > a {
+                > span {
+                    background: white;
+                    @include border-right-radius(20px);
+                    padding: 5px 8px;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+            }
+        }
+    }
 }
 
-.filter_content li span {
-    background: white;
-    @include border-radius(10px);
-    margin: 0 3px;
-    margin-left: 4px;
-    font-weight: bold;
-    padding: 3px 0 3px 10px;
-}
+
 
 #filter_float_clear {
     clear: both;
@@ -941,41 +962,98 @@ p.twitter-icon { background: url('../../img/icon-twitter.png') no-repeat; width:
 
 ===================================================================================*/
 
-.masonry,
-.masonry .masonry-brick {
-  -webkit-transition-duration: 0.7s;
-     -moz-transition-duration: 0.7s;
-      -ms-transition-duration: 0.7s;
-       -o-transition-duration: 0.7s;
-          transition-duration: 0.7s;
+// .masonry,
+// .masonry .masonry-brick {
+//   -webkit-transition-duration: 0.7s;
+//      -moz-transition-duration: 0.7s;
+//       -ms-transition-duration: 0.7s;
+//        -o-transition-duration: 0.7s;
+//           transition-duration: 0.7s;
+// }
+
+// .masonry {
+//   -webkit-transition-property: width, height;
+//      -moz-transition-property: width, height;
+//       -ms-transition-property: width, height;
+//        -o-transition-property: width, height;
+//           transition-property: width, height;
+// }
+
+// .masonry .masonry-brick {
+//   -webkit-transition-property: left, right, top;
+//      -moz-transition-property: left, right, top;
+//       -ms-transition-property: left, right, top;
+//        -o-transition-property: left, right, top;
+//           transition-property: left, right, top;
+// }
+
+// .transitions-enabled.masonry,
+// .transitions-enabled.masonry .masonry-brick {
+//   -webkit-transition-duration: 0.7s;
+//      -moz-transition-duration: 0.7s;
+//       -ms-transition-duration: 0.7s;
+//        -o-transition-duration: 0.7s;
+//           transition-duration: 0.7s;
+// }
+
+// .transitions-enabled.masonry {
+//   -webkit-transition-property: height, width;
+//      -moz-transition-property: height, width;
+//       -ms-transition-property: height, width;
+//        -o-transition-property: height, width;
+//           transition-property: height, width;
+// }
+
+// .transitions-enabled.masonry  .masonry-brick {
+//   -webkit-transition-property: left, right, top;
+//      -moz-transition-property: left, right, top;
+//       -ms-transition-property: left, right, top;
+//        -o-transition-property: left, right, top;
+//           transition-property: left, right, top;
+// }
+
+// /* disable transitions on container */
+// .transitions-enabled.infinite-scroll.masonry {
+//   -webkit-transition-property: none;
+//      -moz-transition-property: none;
+//       -ms-transition-property: none;
+//        -o-transition-property: none;
+//           transition-property: none;
+// }
+
+
+// .corner-stamp {
+//   display: inline-block;
+//   width: 200px;
+//   height: 255px;
+//   margin: 15px;
+//   float: left;
+//   background: white;
+// }
+
+/**** Isotope Filtering ****/
+
+.isotope-item {
+  z-index: 2;
 }
 
-.masonry {
-  -webkit-transition-property: width, height;
-     -moz-transition-property: width, height;
-      -ms-transition-property: width, height;
-       -o-transition-property: width, height;
-          transition-property: width, height;
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
 }
 
-.masonry .masonry-brick {
-  -webkit-transition-property: left, right, top;
-     -moz-transition-property: left, right, top;
-      -ms-transition-property: left, right, top;
-       -o-transition-property: left, right, top;
-          transition-property: left, right, top;
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
 }
 
-.transitions-enabled.masonry,
-.transitions-enabled.masonry .masonry-brick {
-  -webkit-transition-duration: 0.7s;
-     -moz-transition-duration: 0.7s;
-      -ms-transition-duration: 0.7s;
-       -o-transition-duration: 0.7s;
-          transition-duration: 0.7s;
-}
-
-.transitions-enabled.masonry {
+.isotope {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
       -ms-transition-property: height, width;
@@ -983,31 +1061,24 @@ p.twitter-icon { background: url('../../img/icon-twitter.png') no-repeat; width:
           transition-property: height, width;
 }
 
-.transitions-enabled.masonry  .masonry-brick {
-  -webkit-transition-property: left, right, top;
-     -moz-transition-property: left, right, top;
-      -ms-transition-property: left, right, top;
-       -o-transition-property: left, right, top;
-          transition-property: left, right, top;
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:      -o-transform, opacity;
+          transition-property:         transform, opacity;
 }
 
-/* disable transitions on container */
-.transitions-enabled.infinite-scroll.masonry {
-  -webkit-transition-property: none;
-     -moz-transition-property: none;
-      -ms-transition-property: none;
-       -o-transition-property: none;
-          transition-property: none;
-}
+/**** disabling Isotope CSS3 transitions ****/
 
-
-.corner-stamp {
-  display: inline-block;
-  width: 200px;
-  height: 255px;
-  margin: 15px;
-  float: left;
-  background: white;
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 /**** Clearfix ****/

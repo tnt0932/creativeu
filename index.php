@@ -88,16 +88,13 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
      <section id="filter_wrap">
         <div id="filter_bar">
             <h3>Filter your stream</h3>
+            <div id="toggle" class="icon-close"></div>
         </div>
         <div id="filter_container">
-            <ul id="filter_tabs">
-                <li class="filter1"><a href="#" class="filter1 filter_tab">Tags</a></li>
-                <li class="filter2"><a href="#" class="filter2 filter_tab">Program</a></li>
-                <li class="filter3"><a href="#" class="filter3 filter_tab">Grad Year</a></li>
-            </ul>
             <div class="filter1 filter_content">
-                <ul>
-                    <li><a href="index.php?all=true">all snippets</a></li>
+                <h2>Tags</h2>
+                <ul class="filters">
+                    <li><a href="#" data-filter="*">all snippets</a></li>
                     <?php
                     $sql = "SELECT TagName, COUNT(snippet.SnippetID) as count, snippettag.TagID as TID
                             FROM snippet
@@ -107,14 +104,15 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
                             
                     $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
                     while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                       echo '<li><a href="index.php?tag='. $row['TID'] .'">' .$row['TagName'].'<span>'. $row['count'] . '<span></a></li>';
+                       echo '<li><a href="#" class="tags" data-filter=".tag'.$row['TID'].'">' .$row['TagName'].'<span>'. $row['count'] . '<span></a></li>';
                     }
                     ?>
                 </ul>
             </div>
             <div class="filter2 filter_content">
-                 <ul>
-                     <li>all programs</li>
+                <h2>Program</h2>
+                 <ul class="filters">
+                     <li><a href="#" data-filter="*">all programs</a></li>
                    <?php
                    $sql = "SELECT ProgramName as pName, COUNT(snippetID) as count, students.ProgramID as PID
                             FROM snippet
@@ -124,15 +122,16 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
                             
                     $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
                     while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                       echo '<li><a href="index.php?program='. $row['PID'] .'">' .$row['pName'].'<span>'. $row['count'] . '<span></a></li>';
+                       echo '<li><a href="#" class="programs" data-filter=".program'.$row['PID'].'">' .$row['pName'].'<span>'. $row['count'] . '<span></a></li>';
                     }
                     ?>
 
                 </ul>
             </div>
             <div class="filter3 filter_content">
-                 <ul>
-                    <li>all years</li>
+                <h2>Grad Year</h2>
+                 <ul class="filters">
+                    <li><a href="#" data-filter="*">all years</a></li>
                     <?php
                     $sql = "SELECT students.GradYearID as GYID, GradYear as year, COUNT(snippetID) as count
                             FROM snippet
@@ -143,7 +142,7 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
                             
                     $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
                     while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                       echo '<li><a href="index.php?gradyear='. $row['GYID'] .'">' .$row['year'].'<span>'. $row['count'] . '<span></a></li>';
+                       echo '<li><a href="#" class="gradyear" data-filter=".gradyear'.$row['GYID'].'">' .$row['year'].'<span>'. $row['count'] . '<span></a></li>';
                     }
                     ?>
                 </ul>
@@ -160,7 +159,7 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
      <section id="snippet_stream_container">
      
         <?php
-        $sql = "SELECT DISTINCT students.SID, snippet.SnippetID as snippetID, SnippetTitle, SnippetDescription as descr, SnippetURL, SnippetLikes, SnippetAddedDate, SnippetPictureFile, SnippetLikes, SnippetThumbnailFile as thumb, StudentFirstName as fname, StudentLastName as lname, StudentPicture as spic, ProgramName as pName, SchoolName, GradYear, CreativeTitle
+        $sql = "SELECT DISTINCT students.SID, snippet.SnippetID as snippetID, SnippetTitle, SnippetDescription as descr, SnippetURL, SnippetLikes, SnippetAddedDate, SnippetPictureFile, SnippetLikes, SnippetThumbnailFile as thumb, StudentFirstName as fname, StudentLastName as lname, StudentPicture as spic, ProgramName as pName, SchoolName, GradYear, students.GradYearID as GYID, students.ProgramID as PID, CreativeTitle
                 FROM snippet
                 LEFT JOIN snippettag ON (snippet.SnippetID = snippettag.SnippetID)
                 INNER JOIN students ON (snippet.SID = students.SID)
@@ -180,8 +179,17 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
             $studentPic = "<img src='img/default_profile.jpg' width='50' height='50' alt='Profile Image' class='snippet_user_image'>";
             if ($row['spic'] != NULL) { 
                 $studentPic = '<img src="img/student_uploads/'.$row['SID'].'/profile_image/'.$row['spic'].'" alt="'.$row['fname'].' '.$row['lname'].'\'s Profile Picture" width="50" height="50" class="snippet_user_image">';
-            } 
-           echo '<div class="snippet_item">
+            }
+            $sql2 = "SELECT TagID FROM snippettag WHERE SnippetID=".$row['snippetID'];
+            $result2 = mysql_query($sql2) or die ($sql2. '-error' .mysql_error());
+
+            $classString = '';
+            while ($row2 = mysql_fetch_array($result2, MYSQL_ASSOC)) {
+                $classString .= 'tag'.$row2['TagID'].' ';
+            }
+            $classString .= ' program'.$row['PID'];
+            $classString .= ' gradyear'.$row['GYID'];
+            echo '<div class="snippet_item '.$classString.'">
                <a href="#" id="snippet_view_trigger'.$mycounter.'">
                    <img class="snippet_image_stream" src="img/student_uploads/'.$row['SID'].'/'.$row['snippetID'].'/snippet_thumb/'.$row['thumb'].'" width="230" height="230" alt="'.$row['descr'].'">
                </a>
@@ -210,56 +218,103 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
      
     <?php require_once 'footer.php'; ?>
 
+    <script src="js/isotope.min.js"></script>
     <script src="js/cookies.min.js"></script>
     <script>
           
     $(function(){
 
-        divClose("[data-btn='close']", '#marketing');
+        
 
         if (Cookies.get('hideForWeek')) {
             $('#marketing').show(); // TODO: Remove to hide marketing bar
         } else {
             $('#marketing').show();
         }
-            
+
+        // cache container
         var $container = $('#snippet_stream_container');
-
-        $container.imagesLoaded(function(){
-            $container.masonry({
-                itemSelector: '.snippet_item',
-                isFitWidth: true
-            });
+        // initialize isotope
+        $container.isotope({
+            itemSelector : ".snippet_item"
         });
 
-        $container.infinitescroll({
-            navSelector  : '#pagination',    // selector for the paged navigation 
-            nextSelector : '#paginate_next',  // selector for the NEXT link (to page 2)
-            itemSelector : '.snippet_item',     // selector for all items you'll retrieve
-            loading: {
-                finished: undefined,
-                finishedMsg: 'No more pages to load.',
-                img: 'http://i.imgur.com/6RMhx.gif'
-            }
-        },
-        // trigger Masonry as a callback
-        function( newElements ) {
-            // hide new items while they are loading
-            var $newElems = $( newElements ).css({ opacity: 0 });
-            // ensure that images load before adding to masonry layout
-            $newElems.imagesLoaded(function(){
-                // show elems now they're ready
-                $newElems.animate({ opacity: 1 });
-                $container.masonry( 'appended', $newElems, true ); 
-            });
+        // filter items when filter link is clicked
+        $('.filters a').click(function(){
+          var selector = $(this).attr('data-filter');
+          $container.isotope({ filter: selector });
+          return false;
         });
+
+        divClose("[data-btn='close']", '#marketing');
 
     });
+
+
+// Make masonry work with centered layout
+    $.Isotope.prototype._getCenteredMasonryColumns = function() {
+        this.width = this.element.width();
+
+        var parentWidth = this.element.parent().width();
+
+                  // i.e. options.masonry && options.masonry.columnWidth
+        var colW = this.options.masonry && this.options.masonry.columnWidth ||
+                  // or use the size of the first item
+                  this.$filteredAtoms.outerWidth(true) ||
+                  // if there's no items, use size of container
+                  parentWidth;
+
+        var cols = Math.floor( parentWidth / colW );
+        cols = Math.max( cols, 1 );
+
+        // i.e. this.masonry.cols = ....
+        this.masonry.cols = cols;
+        // i.e. this.masonry.columnWidth = ...
+        this.masonry.columnWidth = colW;
+        };
+
+        $.Isotope.prototype._masonryReset = function() {
+        // layout-specific props
+        this.masonry = {};
+        // FIXME shouldn't have to call this again
+        this._getCenteredMasonryColumns();
+        var i = this.masonry.cols;
+        this.masonry.colYs = [];
+        while (i--) {
+        this.masonry.colYs.push( 0 );
+        }
+        };
+
+        $.Isotope.prototype._masonryResizeChanged = function() {
+        var prevColCount = this.masonry.cols;
+        // get updated colCount
+        this._getCenteredMasonryColumns();
+        return ( this.masonry.cols !== prevColCount );
+        };
+
+        $.Isotope.prototype._masonryGetContainerSize = function() {
+        var unusedCols = 0,
+        i = this.masonry.cols;
+        // count unused columns
+        while ( --i ) {
+        if ( this.masonry.colYs[i] !== 0 ) {
+        break;
+        }
+        unusedCols++;
+        }
+    
+        return {
+          height : Math.max.apply( Math, this.masonry.colYs ),
+          // fit container to columns that have been used;
+          width : (this.masonry.cols - unusedCols) * this.masonry.columnWidth
+        };
+  };
 
     function divClose(trigger, target) {
         $(trigger).click(function() {
             $(target).slideUp();
             Cookies.set('hideForWeek', true, { expires: 604800 });
+            
         });
     }
 
