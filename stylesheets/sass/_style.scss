@@ -501,6 +501,7 @@ div#accountcontent .sbutton{
     margin: 0 auto;
     padding: 15px;
     background: transparent;
+    position: relative;
 }
 
 #filter_tabs {
@@ -519,11 +520,14 @@ div#accountcontent .sbutton{
 
 .filter_content {
     max-width: 100%;
-    margin-left: 130px;
+    margin-bottom: 20px;
     background: transparent;
 
     >h2 {
-        font-size: 14px;
+        border-bottom: 1px solid lighten($color-dark-grey, 40%);
+        font-size: $fs-small;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
     }
 }
 
@@ -538,9 +542,19 @@ div#accountcontent .sbutton{
             margin-right: 5px;
             padding: 5px 35px 5px 8px;
             position: relative;
-            &:first-child {
+            &.remove-filters {
                 background: white;
                 padding: 5px 8px;
+                position: absolute;
+                right: 0;
+                top: 0;
+
+                &.active {
+                    background: white;
+                    [data-filter] {
+                        color: black !important;
+                    }
+                }
             }
             &.active,
             &:hover {
@@ -922,6 +936,7 @@ footer {
     margin-top: 50px;
     background: $color-base-dark;
     height: 60px;
+    z-index: 100;
 }
 
 footer ul {

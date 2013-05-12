@@ -88,13 +88,14 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
      <section id="filter_wrap">
         <div id="filter_bar">
             <h3>Filter your stream</h3>
-            <div id="toggle" class="icon-close"></div>
         </div>
         <div id="filter_container">
+
+                    
             <div class="filter1 filter_content">
                 <h2>Tags</h2>
                 <ul class="filters">
-                    <li><a href="#" data-filter="*">all snippets</a></li>
+                    <li class="remove-filters" ><a href="#"data-filter="*">Remove all filters</a></li>
                     <?php
                     $sql = "SELECT TagName, COUNT(snippet.SnippetID) as count, snippettag.TagID as TID
                             FROM snippet
@@ -112,7 +113,6 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
             <div class="filter2 filter_content">
                 <h2>Program</h2>
                  <ul class="filters">
-                     <li><a href="#" data-filter="*">all programs</a></li>
                    <?php
                    $sql = "SELECT ProgramName as pName, COUNT(snippetID) as count, students.ProgramID as PID
                             FROM snippet
@@ -131,7 +131,6 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
             <div class="filter3 filter_content">
                 <h2>Grad Year</h2>
                  <ul class="filters">
-                    <li><a href="#" data-filter="*">all years</a></li>
                     <?php
                     $sql = "SELECT students.GradYearID as GYID, GradYear as year, COUNT(snippetID) as count
                             FROM snippet
@@ -243,6 +242,8 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
         $('.filters a').click(function(){
           var selector = $(this).attr('data-filter');
           $container.isotope({ filter: selector });
+          $('.filter_content').find('li').removeClass('active');
+          $(this).parent().addClass('active');
           return false;
         });
 
@@ -314,7 +315,6 @@ $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $db
         $(trigger).click(function() {
             $(target).slideUp();
             Cookies.set('hideForWeek', true, { expires: 604800 });
-            
         });
     }
 
