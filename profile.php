@@ -8,11 +8,7 @@
         }
         
     }
-    //use this database
-    require_once 'includes/MySQL.php'; // the mysql classes
-    require_once 'includes/db-local.php'; // connects the database here
-
-    $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['database']);// and here
+    require_once 'connect.ini.php';
 
     if (isset($_GET['id'])) {
         $sql = "SELECT SID FROM students";
@@ -23,19 +19,19 @@
         };
         if (!$idexists) { header ('Location: index.php?nouser=true');}
     }
-    if (isset($_GET['addlike'])) {
-        if (!isset($_COOKIE[$_GET['addlike']])){
+    // if (isset($_GET['addlike'])) {
+    //     if (!isset($_COOKIE[$_GET['addlike']])){
        
-            setcookie($_GET['addlike'],$_GET['addlike'], time()+2630000);
-            $sql = "SELECT SnippetLikes FROM snippet WHERE SnippetID=".$_GET['addlike'];
-            $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
-            while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                $likes = $row['SnippetLikes'];
-            };
-            $sql = "UPDATE snippet SET SnippetLikes=$likes+1 WHERE SnippetID=".$_GET['addlike'];
-            $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
-        }
-    }
+    //         setcookie($_GET['addlike'],$_GET['addlike'], time()+2630000);
+    //         $sql = "SELECT SnippetLikes FROM snippet WHERE SnippetID=".$_GET['addlike'];
+    //         $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
+    //         while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    //             $likes = $row['SnippetLikes'];
+    //         };
+    //         $sql = "UPDATE snippet SET SnippetLikes=$likes+1 WHERE SnippetID=".$_GET['addlike'];
+    //         $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
+    //     }
+    // }
     if (isset($_GET['del'])) {
         $sql = "DELETE FROM snippet WHERE SnippetID=".$_GET['del'];
         $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
@@ -157,9 +153,7 @@
 ?>
 
     
-<?php 
-    require_once 'header.php';
-?>
+<?php require_once 'header.php'; ?>
 
 <div id="container">
 <!-- ==================================
@@ -287,7 +281,7 @@
                     }
                  ?>
                 </select>
-                <? } ?>
+                <?php } ?>
                 
                 
                  <h4 id="profile-school"><?php echo $program .' at '.$school . ', '.$gradyear?></h4>
@@ -301,7 +295,7 @@
                 <?php } ?>
                 <?php if (isset($_GET['edit'])) {?>
                 <p id="chars_left_txt">You have <span id="charsLeft"></span> chars left.</p>
-                <? } ?>
+                <?php } ?>
                 <br>
                 
                 <label id="student_public_email_label">
@@ -367,7 +361,7 @@ require_once('paginator.class.php');
                <a href="#" id="snippet_view_trigger'.$mycounter.'">
                    <img class="snippet_image_stream"  src="img/student_uploads/'.$row['SID'].'/'.$row['snippetID'].'/snippet_thumb/'.$row['thumb'].'" width="230" height="230" alt="'.$row['descr'].'">
                </a>
-               <a href="profile.php?id='.$row['SID'].'&addlike='.$row['snippetID'].'" class="heart">'.$row['SnippetLikes'].'</a>'.
+               <a href="#" class="heart" data-snippetid="'.$row['snippetID'].'">'.$row['SnippetLikes'].'</a>'.
                $delete_link.'
                </div>
            ';
@@ -382,6 +376,7 @@ echo '<div id="pagination" style="visibility:hidden">';
         //echo $pages->display_jump_menu();
         //echo $pages->display_items_per_page();
         ?>
+        
 
         <!-- ==================================
                        bottom bar + cancel button
@@ -401,32 +396,115 @@ echo '<div id="pagination" style="visibility:hidden">';
         </form>
     </div>
 </div>
-
+<form id="addlike" action="utility/addlike.php" method="post">
+    <input type="hidden" id="addLikeToSnippet" name="addLikeToSnippet" value="">
+</form>
                 
 </section>
-             
-             
-             
-             
-
-
-
-
 
 <?php require_once 'footer.php'; ?>
 
 <!-- ==================================
             Scripts
 ==================================-->
+<script src="js/isotope.min.js"></script>
+<script src="js/jquery.limit.js" type="text/javascript"></script>
 
-<script src="js/jquery.limit.js"></script>
 <script type="text/javascript">
 
-
+$(function() {
     $('#del_profile_btn').click(function() {
         $('#del_profile_confirm').show();
     });
-    $('#student_description').limit('140', '#charsLeft');
+
+    if ($('#student_description').length != 0) {
+        $('#student_description').limit('140', '#charsLeft');
+    }
+
+    // cache container
+    var $container = $('#snippet_stream_container');
+    // initialize isotope
+    $container.isotope({
+        itemSelector : ".snippet_item"
+    });
+
+    // this is the id of the submit button
+    $("[data-snippetid]").click(function() {
+        var heart = $(this);
+        var snippetID = heart.data('snippetid');
+        $("#addLikeToSnippet").val(snippetID);
+        var url = "utility/addlike.php"; // the script where you handle the form input.
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#addlike").serialize(), // serializes the form's elements.
+            success: function(data) {
+                heart.text(parseInt(heart.text(), 10)+1);
+                console.log('Oh yeaahhh!');
+            }
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    });
+});
+    // Make masonry work with centered layout
+$.Isotope.prototype._getCenteredMasonryColumns = function() {
+    this.width = this.element.width();
+
+    var parentWidth = this.element.parent().width();
+
+              // i.e. options.masonry && options.masonry.columnWidth
+    var colW = this.options.masonry && this.options.masonry.columnWidth ||
+              // or use the size of the first item
+              this.$filteredAtoms.outerWidth(true) ||
+              // if there's no items, use size of container
+              parentWidth;
+
+    var cols = Math.floor( parentWidth / colW );
+    cols = Math.max( cols, 1 );
+
+    // i.e. this.masonry.cols = ....
+    this.masonry.cols = cols;
+    // i.e. this.masonry.columnWidth = ...
+    this.masonry.columnWidth = colW;
+    };
+
+    $.Isotope.prototype._masonryReset = function() {
+    // layout-specific props
+    this.masonry = {};
+    // FIXME shouldn't have to call this again
+    this._getCenteredMasonryColumns();
+    var i = this.masonry.cols;
+    this.masonry.colYs = [];
+    while (i--) {
+    this.masonry.colYs.push( 0 );
+    }
+    };
+
+    $.Isotope.prototype._masonryResizeChanged = function() {
+    var prevColCount = this.masonry.cols;
+    // get updated colCount
+    this._getCenteredMasonryColumns();
+    return ( this.masonry.cols !== prevColCount );
+    };
+
+    $.Isotope.prototype._masonryGetContainerSize = function() {
+    var unusedCols = 0,
+    i = this.masonry.cols;
+    // count unused columns
+    while ( --i ) {
+    if ( this.masonry.colYs[i] !== 0 ) {
+    break;
+    }
+    unusedCols++;
+    }
+    return {
+      height : Math.max.apply( Math, this.masonry.colYs ),
+      // fit container to columns that have been used;
+      width : (this.masonry.cols - unusedCols) * this.masonry.columnWidth
+    };
+};
 
 </script>
 

@@ -95,7 +95,9 @@
 <!-- ==========Add a snippet=========-->
 
 <div id="add_snippet_modal">
-<?php 
+<?php
+
+    if (isset($_SESSION['logged_in_user'])) {
     $SID = $_SESSION['SID'];
     
     //randnumber/intcaptcha used to see if form was submitted with refresh or submit button
@@ -178,6 +180,7 @@
     // make random number and store is session variable. Used when stopping form from submitting on refresh.
     $randNo = md5(mt_rand(0,10));
     $_SESSION['intcaptcha']= $randNo;
+}
 ?>
 	<h1>Add Snippet</h1>
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
@@ -209,10 +212,10 @@
 
     <?php
     //use this database
-    require_once 'includes/MySQL.php'; // the mysql classes
-    require_once 'includes/db-local.php'; // connects the database here
+    // require_once 'includes/MySQL.php'; // the mysql classes
+    // require_once 'includes/db-local.php'; // connects the database here
     
-    $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['database']);// and here
+    // $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['database']);// and here
     $where = '';
     if (($_SERVER['PHP_SELF'] == '/profile.php') && isset($_GET['id'])) {
         $where = 'WHERE students.SID='.$_GET['id'];
@@ -260,7 +263,7 @@
                     <h2><a href="profile.php?id='.$row['SID'].'">'.$row['fname']. ' ' .$row['lname'].'</a></h2><br>
                     <h3>'.$row['pName'].' '.$row['GradYear'].'</h3><br>
                     <h4>'.$row['SchoolName'].'</h4><br>
-                    <a href="'.$_SERVER['PHP_SELF'].'?id='.$row['SID'].'&addlike='.$row['snippetID'].'" class="snippet_likes">'.$row['SnippetLikes'].'</a>
+                    <a href="#" class="heart snippet_likes" data-snippetid="'.$row['snippetID'].'">'.$row['SnippetLikes'].'</a>
                 </div>
                 </div>
             </div>';

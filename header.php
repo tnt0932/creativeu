@@ -140,7 +140,6 @@ $(document).ready(function(){
                         </fieldset>
                         <fieldset id="login-actions">
                             <input id ="login-submit" type="submit" name="login-submit" value="Log in" class="btn-pink">                     
-                            <label><input type="checkbox" checked="checked"><h3>Keep me signed in</h3></label>
                         </fieldset>
                         <a href="#" id="forgot_password_trigger">Forgot password?</a>
                     </form>
@@ -152,6 +151,7 @@ $(document).ready(function(){
             ==========================================-->
             <li id="register"><a href="#" id="register-trigger">Register</a>
                 <div id="register-content">
+                    <p>Are you Canadian student? Register for a free account to display your work!</p>
                     <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
                         <input type="hidden" name="from_page" value="<?php echo $_SERVER['SCRIPT_NAME']; ?>">
                         <fieldset id="register-inputs">

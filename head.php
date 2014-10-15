@@ -1,6 +1,7 @@
 <?php
     //session_start();
     define('URL_ROOT', '/');
+    require_once 'connect.ini.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,7 @@
 	<link rel="stylesheet" href="stylesheets/css/screen.css">
 	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script src="js/scripts.js"></script>
-	<script src="js/jquery.masonry.min.js"></script> <!--TODO: Switch to Masonry.min.js -->
+	<!-- <script src="js/jquery.masonry.min.js"></script> --><!--TODO: Switch to Masonry.min.js -->
 	<script src="js/jquery.lightbox_me.js"></script>
 	<script src="js/jquery.complexify.js"></script>
 	<script src="js/jquery.infinitescroll.min.js"></script>
@@ -36,7 +37,7 @@
 </script>
 
 <!-- Piwik --> 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://localhost:8888/piwik/" : "http://localhost:8888/piwik/");
 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 </script><script type="text/javascript">
@@ -45,13 +46,8 @@ var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
 piwikTracker.trackPageView();
 piwikTracker.enableLinkTracking();
 } catch( err ) {}
-</script><noscript><p><img src="http://localhost:8888/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+</script><noscript><p><img src="http://localhost:8888/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript> -->
 <!-- End Piwik Tracking Code -->
 
 </head>
 <body>
-<?php
-require_once('includes/MySQL.php');
-require_once('includes/db-local.php');
-$db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['database']);
-?>

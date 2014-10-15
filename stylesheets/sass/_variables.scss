@@ -32,8 +32,8 @@
 */
 
 // Fonts
-$font_default_stack-serif: "Times New Roman", Times, serif;
-$font_default_stack-sans_serif: "Helvetica Neue", Arial, sans-serif;
+$ff-helvetica-neue: "Helvetica Neue", Arial, sans-serif;
+$ff-open-sans: "Open Sans", Helvetica, Arial, sans-serif;
 
 // Font weights
 // Note that these are essential for the font_weight mixin in _mixins.scss
@@ -44,7 +44,11 @@ $font_weight-bold: 700;
 $font_weight-black: 900;
 
 // Font sizes
-$font_size-body: 14;
+$fs-xlarge : 36px;
+$fs-large  : 28px;
+$fs-medium : 20px;
+$fs-small  : 16px;
+$fs-xsmall : 12px;
 
 // Colours
 
@@ -54,3 +58,5 @@ $color-accent-pink: #e81d77;
 $color-base: #bdbec2;
 $color-base-light: #e6e7e9;
 $color-base-dark: #232325;
+
+$color-dark-grey: #3e3e3e;
