@@ -12,6 +12,7 @@ _Note: This repo acts as an online museum of an old student group project. Fork 
 2. Create a 'creativeu' database
 
 3. Import creativeu.sql into the creativeu database
+_Note: It has been purged of most entries so it probably won't work right out of the box_
 
 4. Copy db-template.php and rename to db-local.php and populate with db info
     
