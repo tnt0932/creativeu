@@ -3,7 +3,7 @@ CreativeU
 CreativeU is a PHP/MySQL web platform for students to showcase snippets of their work.
 Screenshots at bottom of readme.
 
-_Note: This repo acts as an online museum of an old student group project. Fork at your own risk :)_
+_Note: This is an old student group project that was never really finished. Fork at your own risk :)_
 
 ### Installation:
 
