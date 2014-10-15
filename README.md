@@ -1,5 +1,7 @@
-creativeu
+CreativeU
 =========
+
+![CreativeU Image 1](/github/cu1.png)
 
 ### Installation:
 
