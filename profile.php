@@ -8,11 +8,7 @@
         }
         
     }
-    //use this database
-    require_once 'includes/MySQL.php'; // the mysql classes
-    require_once 'includes/db-local.php'; // connects the database here
-
-    $db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['database']);// and here
+    require_once 'connect.ini.php';
 
     if (isset($_GET['id'])) {
         $sql = "SELECT SID FROM students";
@@ -23,19 +19,19 @@
         };
         if (!$idexists) { header ('Location: index.php?nouser=true');}
     }
-    if (isset($_GET['addlike'])) {
-        if (!isset($_COOKIE[$_GET['addlike']])){
+    // if (isset($_GET['addlike'])) {
+    //     if (!isset($_COOKIE[$_GET['addlike']])){
        
-            setcookie($_GET['addlike'],$_GET['addlike'], time()+2630000);
-            $sql = "SELECT SnippetLikes FROM snippet WHERE SnippetID=".$_GET['addlike'];
-            $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
-            while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                $likes = $row['SnippetLikes'];
-            };
-            $sql = "UPDATE snippet SET SnippetLikes=$likes+1 WHERE SnippetID=".$_GET['addlike'];
-            $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
-        }
-    }
+    //         setcookie($_GET['addlike'],$_GET['addlike'], time()+2630000);
+    //         $sql = "SELECT SnippetLikes FROM snippet WHERE SnippetID=".$_GET['addlike'];
+    //         $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
+    //         while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    //             $likes = $row['SnippetLikes'];
+    //         };
+    //         $sql = "UPDATE snippet SET SnippetLikes=$likes+1 WHERE SnippetID=".$_GET['addlike'];
+    //         $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
+    //     }
+    // }
     if (isset($_GET['del'])) {
         $sql = "DELETE FROM snippet WHERE SnippetID=".$_GET['del'];
         $result = mysql_query($sql) or die ($sql. '-error' .mysql_error());
@@ -365,7 +361,7 @@ require_once('paginator.class.php');
                <a href="#" id="snippet_view_trigger'.$mycounter.'">
                    <img class="snippet_image_stream"  src="img/student_uploads/'.$row['SID'].'/'.$row['snippetID'].'/snippet_thumb/'.$row['thumb'].'" width="230" height="230" alt="'.$row['descr'].'">
                </a>
-               <a href="profile.php?id='.$row['SID'].'&addlike='.$row['snippetID'].'" class="heart">'.$row['SnippetLikes'].'</a>'.
+               <a href="#" class="heart" data-snippetid="'.$row['snippetID'].'">'.$row['SnippetLikes'].'</a>'.
                $delete_link.'
                </div>
            ';
@@ -380,6 +376,7 @@ echo '<div id="pagination" style="visibility:hidden">';
         //echo $pages->display_jump_menu();
         //echo $pages->display_items_per_page();
         ?>
+        
 
         <!-- ==================================
                        bottom bar + cancel button
@@ -399,7 +396,9 @@ echo '<div id="pagination" style="visibility:hidden">';
         </form>
     </div>
 </div>
-
+<form id="addlike" action="utility/addlike.php" method="post">
+    <input type="hidden" id="addLikeToSnippet" name="addLikeToSnippet" value="">
+</form>
                 
 </section>
 
@@ -413,6 +412,7 @@ echo '<div id="pagination" style="visibility:hidden">';
 
 <script type="text/javascript">
 
+$(function() {
     $('#del_profile_btn').click(function() {
         $('#del_profile_confirm').show();
     });
@@ -428,6 +428,26 @@ echo '<div id="pagination" style="visibility:hidden">';
         itemSelector : ".snippet_item"
     });
 
+    // this is the id of the submit button
+    $("[data-snippetid]").click(function() {
+        var heart = $(this);
+        var snippetID = heart.data('snippetid');
+        $("#addLikeToSnippet").val(snippetID);
+        var url = "utility/addlike.php"; // the script where you handle the form input.
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#addlike").serialize(), // serializes the form's elements.
+            success: function(data) {
+                heart.text(parseInt(heart.text(), 10)+1);
+                console.log('Oh yeaahhh!');
+            }
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    });
+});
     // Make masonry work with centered layout
 $.Isotope.prototype._getCenteredMasonryColumns = function() {
     this.width = this.element.width();

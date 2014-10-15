@@ -1,6 +1,7 @@
 <?php
     //session_start();
     define('URL_ROOT', '/');
+    require_once 'connect.ini.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -50,8 +51,3 @@ piwikTracker.enableLinkTracking();
 
 </head>
 <body>
-<?php
-require_once('includes/MySQL.php');
-require_once('includes/db-local.php');
-$db = new MySQL($dbconfig['host'], $dbconfig['user'], $dbconfig['password'], $dbconfig['database']);
-?>

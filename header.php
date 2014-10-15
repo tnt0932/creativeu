@@ -140,7 +140,6 @@ $(document).ready(function(){
                         </fieldset>
                         <fieldset id="login-actions">
                             <input id ="login-submit" type="submit" name="login-submit" value="Log in" class="btn-pink">                     
-                            <label><input type="checkbox" checked="checked"><h3>Keep me signed in</h3></label>
                         </fieldset>
                         <a href="#" id="forgot_password_trigger">Forgot password?</a>
                     </form>
